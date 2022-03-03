@@ -21,7 +21,7 @@
                     {{ question.subject }}
                     {% if question.answer_set.count > 0 %}
                     <span class="text-danger small ml-2">
-                      답변  {{ question.answer_set.count }}
+                      ({{ question.answer_set.count }})
                     </span>
                     {% endif %}
                 </a>
