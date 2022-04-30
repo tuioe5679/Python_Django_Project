@@ -1,8 +1,11 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
 class Question(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)   # 계정 삭제시 데이터 전부 삭제
     subject = models.CharField(max_length=200)
+    modify_date = models.DateTimeField(null=True, blank=True)     # 수정 일시
     content = models.TextField()
     create_date = models.DateTimeField()
 
@@ -11,6 +14,8 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)  # 질문 삭제시 해당 데이터 전부 삭제
+    modify_date = models.DateTimeField(null=True, blank=True)          # 수정 일시
     content = models.TextField()
     create_date = models.DateTimeField()
