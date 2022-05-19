@@ -3,22 +3,24 @@ from django.db import models
 
 
 class Question(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)   # 계정 삭제시 데이터 전부 삭제
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_question')   # 계정 삭제시 데이터 전부 삭제
     subject = models.CharField(max_length=200)
     modify_date = models.DateTimeField(null=True, blank=True)     # 수정 일시
     content = models.TextField()
     create_date = models.DateTimeField()
+    voter = models.ManyToManyField(User, related_name='voter_question')
 
     def __str__(self):
         return self.subject
 
 
 class Answer(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_answer')
     question = models.ForeignKey(Question, on_delete=models.CASCADE)  # 질문 삭제시 해당 데이터 전부 삭제
     modify_date = models.DateTimeField(null=True, blank=True)          # 수정 일시
     content = models.TextField()
     create_date = models.DateTimeField()
+    voter = models.ManyToManyField(User, related_name='voter_answer')
 
 
 class Comment(models.Model):
